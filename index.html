@@ -34,27 +34,51 @@
   <main id="main">
 
     <!-- HERO -->
-    <section class="hero wrap" id="home">
-      <h1 class="hero__name reveal">C Janci Kundana</h1>
-      <p class="hero__role reveal">Digital Transformation Student | <mark>Aspiring Data Scientist</mark></p>
-      <p class="hero__intro reveal">Hey! I'm a curious person who loves learning new things, trying new ideas, and building things along the way.</p>
-      <div class="hero__cta reveal">
-        <a class="btn btn--dark" href="#projects">View My Work →</a>
-        <a class="btn" href="#resume">Resume</a>
+    <section class="hero band band--hero" id="home">
+      <div class="hero__art" aria-hidden="true">
+        <span class="blob blob--1"></span><span class="blob blob--2"></span><span class="blob blob--3"></span>
+      </div>
+      <div class="wrap hero__inner">
+        <div class="hero__text">
+          <p class="hero__tag reveal">BTech · 3rd Year · Atria University</p>
+          <h1 class="hero__name reveal">C Janci Kundana</h1>
+          <p class="hero__role reveal">Digital Transformation Student | <mark>Aspiring Data Scientist</mark></p>
+          <p class="hero__intro reveal">Hey! I'm a curious person who loves learning new things, trying new ideas, and building things along the way.</p>
+          <div class="hero__cta reveal">
+            <a class="btn btn--dark" href="#projects">View My Work →</a>
+            <a class="btn" href="#resume">Resume</a>
+          </div>
+        </div>
+        <svg class="badge reveal" viewBox="0 0 200 200" aria-hidden="true">
+          <defs><path id="badge-circle" d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0" /></defs>
+          <circle cx="100" cy="100" r="98" class="badge__bg" />
+          <text class="badge__ring"><textPath href="#badge-circle" textLength="470">DATA SCIENCE ✦ MACHINE LEARNING ✦ DIGITAL TRANSFORMATION ✦</textPath></text>
+          <text x="100" y="118" text-anchor="middle" class="badge__center">CJK</text>
+        </svg>
       </div>
     </section>
 
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Python ✦ Data Analysis ✦ Machine Learning ✦ Classification ✦ Clustering ✦ Regression ✦ Anomaly Detection ✦ JavaScript ✦ MySQL ✦ Git ✦&nbsp;</span>
+        <span>Python ✦ Data Analysis ✦ Machine Learning ✦ Classification ✦ Clustering ✦ Regression ✦ Anomaly Detection ✦ JavaScript ✦ MySQL ✦ Git ✦&nbsp;</span>
+      </div>
+    </div>
+
     <!-- ABOUT -->
-    <section class="section wrap" id="about">
+    <section class="section band band--butter" id="about">
+      <div class="wrap">
       <h2 class="title reveal">About</h2>
       <div class="about reveal">
         <p>Third-year BTech student in Digital Transformation at Atria University, Bangalore. I enjoy exploring technology, data and machine learning.</p>
         <p>Right now I'm focused on <mark>Data Science and Machine Learning</mark> — and on using data to build practical solutions.</p>
       </div>
+      </div>
     </section>
 
     <!-- PROJECTS -->
-    <section class="section wrap" id="projects">
+    <section class="section band band--base" id="projects">
+      <div class="wrap">
       <h2 class="title reveal">Projects</h2>
 
       <div class="cards">
@@ -106,10 +130,12 @@
         <li><span>Attendance App</span><span class="list__meta">Student attendance with admin login · React.js</span><span class="list__links"></span></li>
         <li><span>Terminal Pac-Man</span><span class="list__meta">ASCII game · Python</span><span class="list__links"><a href="https://github.com/Janci-Kundana/Pacman-Game" target="_blank" rel="noopener">Code ↗</a></span></li>
       </ul>
+      </div>
     </section>
 
     <!-- EDUCATION -->
-    <section class="section wrap" id="education">
+    <section class="section band band--mint" id="education">
+      <div class="wrap">
       <h2 class="title reveal">Education</h2>
       <div class="edu reveal">
         <div>
@@ -130,10 +156,12 @@
         <li><b>Web Development</b><span>Visit Rajasthan, Patient Vitals Tracker</span></li>
         <li><b>Digital Transformation</b><span>BTech coursework</span></li>
       </ul>
+      </div>
     </section>
 
     <!-- TOOLS / SKILLS -->
-    <section class="section wrap" id="tools">
+    <section class="section band band--peach" id="tools">
+      <div class="wrap">
       <h2 class="title reveal">Tools &amp; Skills</h2>
       <div class="skills reveal">
         <div class="skills__col skills__col--lav">
@@ -153,12 +181,14 @@
           <p>OOP · Basic Data Structures · Responsive Design · Problem Solving</p>
         </div>
       </div>
+      </div>
     </section>
 
     <!-- Achievements & Certifications: add here once there's something verified to show. -->
 
     <!-- RESUME -->
-    <section class="section wrap" id="resume">
+    <section class="section band band--sky" id="resume">
+      <div class="wrap">
       <div class="resume reveal">
         <h2 class="title">Resume</h2>
         <div class="resume__actions">
@@ -166,10 +196,12 @@
           <a class="btn" href="assets/C-Janci-Kundana-Resume.pdf" download="C-Janci-Kundana-Resume.pdf">Download Resume ↓</a>
         </div>
       </div>
+      </div>
     </section>
 
     <!-- CONTACT -->
-    <section class="section wrap" id="contact">
+    <section class="section band band--pink" id="contact">
+      <div class="wrap">
       <div class="contact">
         <div class="reveal">
           <h2 class="title">Let's connect.</h2>
@@ -188,12 +220,15 @@
           <p class="form__note" role="status" aria-live="polite"></p>
         </form>
       </div>
+      </div>
     </section>
   </main>
 
-  <footer class="footer wrap">
-    <span>© <span id="year">2026</span> C Janci Kundana</span>
-    <a href="#home">Back to top ↑</a>
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <span>© <span id="year">2026</span> C Janci Kundana</span>
+      <a href="#home">Back to top ↑</a>
+    </div>
   </footer>
 
   <!-- PROJECT DETAILS -->
