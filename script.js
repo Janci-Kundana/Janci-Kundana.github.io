@@ -1,196 +1,214 @@
 document.documentElement.classList.add("js");
-
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* ---------- nav: scrolled state, mobile menu, active link ---------- */
+/* ---------- nav ---------- */
 const nav = document.querySelector(".nav");
-const toggle = document.querySelector(".nav__toggle");
-const links = document.getElementById("nav-links");
-
-const setMenu = (open) => {
-  toggle.setAttribute("aria-expanded", String(open));
-  toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-  links.classList.toggle("is-open", open);
-};
-
-toggle.addEventListener("click", () => setMenu(toggle.getAttribute("aria-expanded") !== "true"));
-links.addEventListener("click", (e) => { if (e.target.closest("a")) setMenu(false); });
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") setMenu(false); });
-
 const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 8);
 onScroll();
 window.addEventListener("scroll", onScroll, { passive: true });
 
-const navLinks = [...links.querySelectorAll('a[href^="#"]:not(.btn)')];
-const sectionFor = {
-  home: "home", about: "about", skills: "skills", projects: "projects",
-  education: "education", learning: "education", resume: "contact", contact: "contact",
-};
+const navLinks = [...document.querySelectorAll(".nav__links a")];
+const navFor = { projects: "projects", education: "education", tools: "tools", resume: "contact", contact: "contact" };
 const spy = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      const target = sectionFor[entry.target.id];
-      navLinks.forEach((a) => a.classList.toggle("is-active", a.getAttribute("href") === `#${target}`));
-    });
-  },
+  (entries) => entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    const id = navFor[e.target.id];
+    navLinks.forEach((a) => a.classList.toggle("is-active", a.getAttribute("href") === `#${id}`));
+  }),
   { rootMargin: "-45% 0px -50% 0px" }
 );
 document.querySelectorAll("main section[id]").forEach((s) => spy.observe(s));
 
-/* ---------- reveal on scroll ---------- */
-const revealables = document.querySelectorAll(".reveal");
+/* ---------- reveal ---------- */
+const reveals = document.querySelectorAll(".reveal");
 if (reduceMotion || !("IntersectionObserver" in window)) {
-  revealables.forEach((el) => el.classList.add("is-in"));
+  reveals.forEach((el) => el.classList.add("is-in"));
 } else {
-  // stagger siblings that enter together
-  revealables.forEach((el) => {
-    const siblings = [...el.parentElement.children].filter((c) => c.classList.contains("reveal"));
-    el.style.setProperty("--d", `${Math.min(siblings.indexOf(el), 5) * 0.07}s`);
-  });
   const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-in");
-        io.unobserve(entry.target);
-      });
-    },
-    { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+    (entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("is-in");
+      io.unobserve(e.target);
+    }),
+    { rootMargin: "0px 0px -8% 0px" }
   );
-  revealables.forEach((el) => io.observe(el));
+  reveals.forEach((el) => io.observe(el));
 }
 
-/* ---------- project detail dialogs ---------- */
-document.querySelectorAll("[data-open]").forEach((btn) => {
-  const dialog = document.getElementById(btn.dataset.open);
-  if (!dialog) return;
-  btn.addEventListener("click", () => {
-    dialog.showModal();
-    document.body.classList.add("modal-open");
-  });
-});
-document.querySelectorAll("dialog.modal").forEach((dialog) => {
-  dialog.addEventListener("close", () => document.body.classList.remove("modal-open"));
-  dialog.addEventListener("click", (e) => {
-    // close on backdrop click or close button
-    if (e.target === dialog || e.target.closest("[data-close]")) dialog.close();
-  });
+/* ---------- project dialogs ---------- */
+const openDialog = (id) => {
+  const d = document.getElementById(id);
+  if (!d) return;
+  d.showModal();
+  document.body.classList.add("modal-open");
+};
+document.querySelectorAll("[data-open]").forEach((b) => b.addEventListener("click", () => openDialog(b.dataset.open)));
+document.querySelectorAll("dialog.modal").forEach((d) => {
+  d.addEventListener("close", () => document.body.classList.remove("modal-open"));
+  d.addEventListener("click", (e) => { if (e.target === d || e.target.closest("[data-close]")) d.close(); });
 });
 
-/* ---------- contact form ----------
-   Static site, so the form opens the visitor's email app with everything
-   filled in. To send from the page instead, point the form at a service
-   like Formspree and remove this handler. */
+/* ---------- contact form (opens the visitor's email app) ---------- */
 const form = document.getElementById("contact-form");
 const note = form.querySelector(".form__note");
-
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  let valid = true;
-  form.querySelectorAll("input, textarea").forEach((field) => {
-    const ok = field.checkValidity() && field.value.trim() !== "";
-    field.closest(".field").classList.toggle("is-invalid", !ok);
-    if (!ok) valid = false;
+  let ok = true;
+  form.querySelectorAll("input, textarea").forEach((f) => {
+    const valid = f.checkValidity() && f.value.trim() !== "";
+    f.classList.toggle("is-invalid", !valid);
+    if (!valid) ok = false;
   });
-  if (!valid) {
-    note.textContent = "Please fill in your name, a valid email, and a message.";
-    note.classList.add("is-error");
-    return;
-  }
+  if (!ok) { note.textContent = "Please fill in all fields with a valid email."; return; }
   const { name, email, message } = Object.fromEntries(new FormData(form));
   const subject = `Portfolio message from ${name.trim()}`;
   const body = `${message.trim()}\n\n— ${name.trim()} (${email.trim()})`;
-  window.location.href =
-    `mailto:cuddaphajanci@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  note.classList.remove("is-error");
-  note.textContent = "Your email app should open now — thanks for reaching out!";
+  window.location.href = `mailto:cuddaphajanci@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  note.textContent = "Opening your email app…";
 });
-form.addEventListener("input", (e) => e.target.closest(".field")?.classList.remove("is-invalid"));
+form.addEventListener("input", (e) => e.target.classList.remove("is-invalid"));
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/* ---------- hero dot field ----------
-   A quiet grid of points; the ones near a moving "centroid" (your cursor,
-   or a slow drift when idle) lean in and pick up the accent colour —
-   a small nod to clustering. */
-(() => {
-  const canvas = document.querySelector(".hero__field");
-  const ctx = canvas.getContext("2d");
-  const hero = canvas.parentElement;
-  const GAP = 26;
-  const RADIUS = 170;
-  let w = 0, h = 0, dpr = 1, points = [], visible = true, raf = 0, t = 0;
-  const pointer = { x: 0, y: 0, active: false, lastMove: 0 };
-  const centroid = { x: 0, y: 0 };
-  let colors = {};
+/* ==========================================================
+   Portfolio assistant
+   Answers only from what's on this page — no external AI.
+   To change an answer, edit the KB entries below.
+   ========================================================== */
+const link = (href, text) => `<a href="${href}"${href.startsWith("http") ? ' target="_blank" rel="noopener"' : ""}>${text}</a>`;
 
-  const readColors = () => {
-    const css = getComputedStyle(document.documentElement);
-    colors = { dot: css.getPropertyValue("--muted").trim(), accent: css.getPropertyValue("--accent").trim() };
-  };
+const KB = [
+  { id: "hello", keys: ["hi", "hello", "hey", "hii", "hola", "namaste"],
+    answer: "Hi! 👋 I can tell you about Janci's projects, skills, education, resume or how to get in touch. What would you like to know?" },
+  { id: "about", weight: 0.6, keys: ["who", "janci", "kundana", "yourself", "introduce", "introduction", "summary", "background"],
+    answer: "C Janci Kundana is a third-year BTech student in Digital Transformation at Atria University, Bangalore — and an aspiring Data Scientist, currently focused on Data Science and Machine Learning, and on using data to build practical solutions." },
+  { id: "goal", keys: ["goal", "career", "future", "aspire", "aspiring", "aim", "plan", "want", "become", "interest", "interested"],
+    answer: "Janci's goal is to become a <b>Data Scientist</b>. The path so far: Digital Transformation → Data Science & Machine Learning → Aspiring Data Scientist." },
+  { id: "education", keys: ["education", "university", "college", "atria", "degree", "btech", "study", "studying", "cgpa", "gpa", "grade", "marks", "year", "course"],
+    answer: "<b>Atria University</b>, Bangalore — BTech in Digital Transformation (2024 — Present). Currently in third year, with a CGPA of <b>7.3</b>." },
+  { id: "skills", keys: ["skill", "skills", "tools", "tool", "tech", "technology", "technologies", "stack", "languages", "language", "know", "python", "javascript", "sql", "mysql", "git", "tailwind"],
+    answer: "Here's the toolkit:<ul><li><b>Data Science & ML:</b> Python, Data Analysis, Classification, Clustering, Regression, Anomaly Detection</li><li><b>Programming:</b> Python, JavaScript, HTML, CSS, Tailwind CSS, MySQL</li><li><b>Tools:</b> Git, GitHub, VS Code, MySQL Workbench</li><li><b>Concepts:</b> OOP, Basic Data Structures, Responsive Design, Problem Solving</li></ul>" },
+  { id: "ml", weight: 0.8, keys: ["machine learning", "ml", "data science", "data", "model", "models", "ai", "analysis", "analytics"],
+    answer: "Two ML projects show Janci's data science work:<ul><li><b>Startup Success & Funding Analysis</b> — classification, K-Means clustering, Ridge / Lasso / ElasticNet regression</li><li><b>Heart Disease Clustering & Anomaly Detection</b> — K-Means, DBSCAN, Isolation Forest, silhouette & elbow methods</li></ul>" },
+  { id: "projects", weight: 0.5, keys: ["project", "projects", "work", "built", "build", "portfolio", "made", "showcase"],
+    answer: "Featured projects:<ul><li>Startup Success & Funding Analysis <i>(Data Science / ML)</i></li><li>Heart Disease Clustering & Anomaly Detection <i>(Unsupervised ML)</i></li><li>Visit Rajasthan <i>(Interactive WebGL site)</i></li><li>Patient Vitals Tracker <i>(Full-stack)</i></li></ul>Ask me about any of them!" },
+  { id: "startup", keys: ["startup", "startups", "funding", "investment", "ridge", "lasso", "elasticnet", "regression", "classification", "company", "industry", "continent"],
+    answer: "<b>Startup Success & Funding Analysis</b> — an academic ML project on startup funding and company success. Features explored: total funding, funding rounds, total investment, industry group and continent. Methods: classification, K-Means clustering, and Ridge, Lasso & ElasticNet regression.",
+    action: { label: "Open project", open: "p-startup" } },
+  { id: "heart", keys: ["heart", "disease", "anomaly", "anomalies", "outlier", "dbscan", "isolation", "forest", "unsupervised", "clustering", "cluster", "silhouette", "elbow", "clinical"],
+    answer: "<b>Heart Disease Clustering & Anomaly Detection</b> — an academic project using unsupervised learning to find distinct patient groups and unusual clinical profiles. Methods: K-Means, DBSCAN, Isolation Forest, silhouette analysis and the elbow method.",
+    action: { label: "Open project", open: "p-heart" } },
+  { id: "rajasthan", keys: ["rajasthan", "travel", "webgl", "three", "threejs", "blender", "3d", "jaipur", "udaipur", "jaisalmer", "jawai", "isometric", "creative"],
+    answer: `<b>Visit Rajasthan</b> — an interactive travel experience with four destinations (Jaipur, Jaisalmer, Jawai, Udaipur), a WebGL landing scene and isometric Blender city tiles. Built with Three.js, TypeScript and Vite. ${link("https://janci-kundana.github.io/visit-rajasthan/", "Live site ↗")} · ${link("https://github.com/Janci-Kundana/visit-rajasthan", "GitHub ↗")}`,
+    action: { label: "Open project", open: "p-rajasthan" } },
+  { id: "vitals", keys: ["vitals", "vital", "tracker", "patient", "doctor", "full-stack", "fullstack", "full stack", "node", "express", "mongodb", "mongo", "jwt", "backend", "health"],
+    answer: "<b>Patient Vitals Tracker</b> — a full-stack app to track and visualise patient vitals, with separate patient and doctor experiences. Built with Node.js, Express, MongoDB, JWT and JavaScript.",
+    action: { label: "Open project", open: "p-vitals" } },
+  { id: "other", keys: ["other", "game", "games", "pixel", "dungeon", "pacman", "pac-man", "zombie", "attendance", "small", "fun", "side"],
+    answer: `Other work:<ul><li><b>Pixel Dungeon Escape</b> — browser game (${link("https://janci-kundana.github.io/Pixel-Dungeon/", "play ↗")})</li><li><b>Backend Development</b> — REST API practice with Node, Express, MongoDB</li><li><b>Zombie Hunter</b> — 10-player command-line card game (OOP)</li><li><b>Attendance App</b> — student attendance with instructor & admin logins</li><li><b>Terminal Pac-Man</b> — Python ASCII game</li></ul>` },
+  { id: "experience", keys: ["experience", "internship", "intern", "job", "jobs", "employment", "company worked", "worked", "professional", "hire", "hiring", "available", "opportunity", "opportunities"],
+    answer: `No professional experience is listed yet — Janci's hands-on experience comes from academic and personal projects in data science, ML and web development. For opportunities, reach out at ${link("mailto:cuddaphajanci@gmail.com", "cuddaphajanci@gmail.com")}.` },
+  { id: "certs", keys: ["certificate", "certificates", "certification", "certifications", "award", "awards", "achievement", "achievements", "hackathon"],
+    answer: "No certifications or awards are listed on the portfolio yet." },
+  { id: "resume", keys: ["resume", "cv", "pdf", "download"],
+    answer: `Here's the resume: ${link("assets/C-Janci-Kundana-Resume.pdf", "View PDF ↗")}` },
+  { id: "contact", keys: ["contact", "email", "mail", "reach", "linkedin", "github", "connect", "message", "talk"],
+    answer: `Let's connect:<ul><li>Email: ${link("mailto:cuddaphajanci@gmail.com", "cuddaphajanci@gmail.com")}</li><li>${link("https://www.linkedin.com/in/c-janci-kundana-37313b328/", "LinkedIn ↗")}</li><li>${link("https://github.com/Janci-Kundana", "GitHub ↗")}</li></ul>` },
+  { id: "location", keys: ["where", "location", "based", "live", "city", "bangalore", "bengaluru", "karnataka", "india"],
+    answer: "Janci is based in Bangalore, Karnataka, India." },
+  { id: "thanks", keys: ["thanks", "thank", "thx", "great", "cool", "nice", "awesome", "bye", "goodbye"],
+    answer: "You're welcome! Feel free to ask anything else. 😊" },
+];
 
-  const resize = () => {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    w = hero.clientWidth;
-    h = hero.clientHeight;
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    points = [];
-    for (let y = GAP / 2; y < h; y += GAP) for (let x = GAP / 2; x < w; x += GAP) points.push({ x, y });
-    if (!centroid.x) { centroid.x = w * 0.72; centroid.y = h * 0.42; }
-    draw();
-  };
+const SUGGESTIONS = ["Who is Janci?", "Projects", "ML work", "Skills", "Education", "Contact"];
 
-  const draw = () => {
-    ctx.clearRect(0, 0, w, h);
-    for (const p of points) {
-      const dx = centroid.x - p.x;
-      const dy = centroid.y - p.y;
-      const dist = Math.hypot(dx, dy);
-      const k = reduceMotion ? 0 : Math.max(0, 1 - dist / RADIUS);
-      const pull = k * k * 10;
-      const x = p.x + (dist ? (dx / dist) * pull : 0);
-      const y = p.y + (dist ? (dy / dist) * pull : 0);
-      ctx.globalAlpha = 0.28 + k * 0.6;
-      ctx.fillStyle = k > 0.18 ? colors.accent : colors.dot;
-      ctx.beginPath();
-      ctx.arc(x, y, 1.1 + k * 1.3, 0, Math.PI * 2);
-      ctx.fill();
+const normalise = (s) => s.toLowerCase().replace(/[^a-z0-9\s+#.-]/g, " ").replace(/\s+/g, " ").trim();
+
+function findAnswer(q) {
+  const text = ` ${normalise(q)} `;
+  let best = null, bestScore = 0;
+  for (const entry of KB) {
+    let score = 0;
+    for (const k of entry.keys) {
+      if (text.includes(` ${k} `) || (k.length > 4 && text.includes(k))) score += (k.includes(" ") ? 2 : 1) * (entry.weight ?? 1);
     }
-    ctx.globalAlpha = 1;
-  };
+    if (score > bestScore) { best = entry; bestScore = score; }
+  }
+  return best;
+}
 
-  const tick = () => {
-    t += 0.004;
-    const idle = !pointer.active || performance.now() - pointer.lastMove > 2500;
-    const tx = idle ? w * (0.68 + 0.18 * Math.sin(t * 1.3)) : pointer.x;
-    const ty = idle ? h * (0.45 + 0.2 * Math.sin(t * 0.9 + 1)) : pointer.y;
-    centroid.x += (tx - centroid.x) * 0.06;
-    centroid.y += (ty - centroid.y) * 0.06;
-    draw();
-    raf = visible ? requestAnimationFrame(tick) : 0;
-  };
+const chat = document.getElementById("chat");
+const fab = document.getElementById("chat-open");
+const log = document.getElementById("chat-log");
+const chips = document.getElementById("chat-chips");
+const chatForm = document.getElementById("chat-form");
+const input = document.getElementById("chat-input");
 
-  readColors();
-  resize();
-  window.addEventListener("resize", resize);
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { readColors(); draw(); });
+function addMsg(html, who, isText = false) {
+  const div = document.createElement("div");
+  div.className = `msg msg--${who}`;
+  if (isText) div.textContent = html; else div.innerHTML = html;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+  return div;
+}
 
-  if (reduceMotion) return;
-
-  hero.addEventListener("pointermove", (e) => {
-    const r = hero.getBoundingClientRect();
-    pointer.x = e.clientX - r.left;
-    pointer.y = e.clientY - r.top;
-    pointer.active = true;
-    pointer.lastMove = performance.now();
+function renderChips(list) {
+  chips.innerHTML = "";
+  list.forEach((item) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    if (typeof item === "string") {
+      b.textContent = item;
+      b.addEventListener("click", () => ask(item));
+    } else {
+      b.textContent = item.label;
+      b.addEventListener("click", () => openDialog(item.open));
+    }
+    chips.appendChild(b);
   });
-  hero.addEventListener("pointerleave", () => { pointer.active = false; });
+}
 
-  new IntersectionObserver(([entry]) => {
-    visible = entry.isIntersecting;
-    if (visible && !raf) raf = requestAnimationFrame(tick);
-  }).observe(hero);
-})();
+function ask(q) {
+  if (!q.trim()) return;
+  addMsg(q, "user", true);
+  const typing = addMsg("•••", "bot");
+  typing.classList.add("msg--typing");
+  const entry = findAnswer(q);
+  setTimeout(() => {
+    typing.remove();
+    if (entry) {
+      addMsg(entry.answer, "bot");
+      renderChips(entry.action ? [entry.action, ...SUGGESTIONS.slice(1, 4)] : SUGGESTIONS);
+    } else {
+      addMsg("I'm not sure about that one — I only know what's on this portfolio. Try asking about projects, skills, education or contact details.", "bot");
+      renderChips(SUGGESTIONS);
+    }
+  }, reduceMotion ? 0 : 450);
+}
+
+let started = false;
+function setChat(open) {
+  chat.hidden = !open;
+  fab.setAttribute("aria-expanded", String(open));
+  if (open) {
+    if (!started) {
+      started = true;
+      addMsg("Hi! 👋 I'm Janci's portfolio assistant. Ask me about projects, skills, education or how to get in touch.", "bot");
+      renderChips(SUGGESTIONS);
+    }
+    input.focus();
+  } else {
+    fab.focus();
+  }
+}
+fab.addEventListener("click", () => setChat(true));
+document.getElementById("chat-close").addEventListener("click", () => setChat(false));
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !chat.hidden && !document.querySelector("dialog[open]")) setChat(false); });
+chatForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const q = input.value;
+  input.value = "";
+  ask(q);
+});
