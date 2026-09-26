@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>C Janci Kundana — Portfolio</title>
   <meta name="description" content="C Janci Kundana — Digital Transformation student at Atria University and aspiring Data Scientist." />
-  <meta name="theme-color" content="#fdfcfa" />
+  <meta name="theme-color" content="#e6ebdc" />
   <meta property="og:title" content="C Janci Kundana — Portfolio" />
   <meta property="og:description" content="Digital Transformation Student | Aspiring Data Scientist" />
   <meta property="og:type" content="website" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ece8f7'/%3E%3Ctext x='50%25' y='70%25' text-anchor='middle' font-family='Impact,Arial Black,sans-serif' font-size='36' fill='%23111'%3ECJ%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23c9d5bb'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%23c8734f'/%3E%3C/svg%3E" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,7 +21,6 @@
 
   <header class="nav">
     <div class="wrap nav__inner">
-      <a class="nav__brand" href="#home">CJK</a>
       <nav class="nav__links" aria-label="Primary">
         <a href="#projects">Projects</a><span aria-hidden="true">|</span>
         <a href="#education">Education</a><span aria-hidden="true">|</span>
@@ -35,38 +34,34 @@
 
     <!-- HERO -->
     <section class="hero band band--hero" id="home">
-      <div class="hero__art" aria-hidden="true">
-        <span class="blob blob--1"></span><span class="blob blob--2"></span><span class="blob blob--3"></span>
-      </div>
       <div class="wrap hero__inner">
         <div class="hero__text">
           <p class="hero__tag reveal">BTech · 3rd Year · Atria University</p>
-          <h1 class="hero__name reveal">C Janci Kundana</h1>
+          <h1 class="hero__name reveal">C Janci <span>Kundana</span></h1>
           <p class="hero__role reveal">Digital Transformation Student | <mark>Aspiring Data Scientist</mark></p>
           <p class="hero__intro reveal">Hey! I'm a curious person who loves learning new things, trying new ideas, and building things along the way.</p>
           <div class="hero__cta reveal">
-            <a class="btn btn--dark" href="#projects">View My Work →</a>
+            <a class="btn btn--pop" href="#projects">View My Work →</a>
             <a class="btn" href="#resume">Resume</a>
           </div>
         </div>
-        <svg class="badge reveal" viewBox="0 0 200 200" aria-hidden="true">
-          <defs><path id="badge-circle" d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0" /></defs>
-          <circle cx="100" cy="100" r="98" class="badge__bg" />
-          <text class="badge__ring"><textPath href="#badge-circle" textLength="470">DATA SCIENCE ✦ MACHINE LEARNING ✦ DIGITAL TRANSFORMATION ✦</textPath></text>
-          <text x="100" y="118" text-anchor="middle" class="badge__center">CJK</text>
-        </svg>
+        <dl class="facts reveal">
+          <div><dt>Based in</dt><dd>Bangalore, India</dd></div>
+          <div><dt>Focus</dt><dd>Data Science &amp; ML</dd></div>
+          <div><dt>Looking for</dt><dd>Internships</dd></div>
+        </dl>
       </div>
     </section>
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
-        <span>Python ✦ Data Analysis ✦ Machine Learning ✦ Classification ✦ Clustering ✦ Regression ✦ Anomaly Detection ✦ JavaScript ✦ MySQL ✦ Git ✦&nbsp;</span>
-        <span>Python ✦ Data Analysis ✦ Machine Learning ✦ Classification ✦ Clustering ✦ Regression ✦ Anomaly Detection ✦ JavaScript ✦ MySQL ✦ Git ✦&nbsp;</span>
+        <span>Python <b>✦</b> Data Analysis <b>✦</b> Machine Learning <b>✦</b> Classification <b>✦</b> Clustering <b>✦</b> Regression <b>✦</b> Anomaly Detection <b>✦</b> JavaScript <b>✦</b> MySQL <b>✦</b> Git <b>✦</b>&nbsp;</span>
+        <span>Python <b>✦</b> Data Analysis <b>✦</b> Machine Learning <b>✦</b> Classification <b>✦</b> Clustering <b>✦</b> Regression <b>✦</b> Anomaly Detection <b>✦</b> JavaScript <b>✦</b> MySQL <b>✦</b> Git <b>✦</b>&nbsp;</span>
       </div>
     </div>
 
     <!-- ABOUT -->
-    <section class="section band band--butter" id="about">
+    <section class="section band band--plain" id="about">
       <div class="wrap">
       <h2 class="title reveal">About</h2>
       <div class="about reveal">
@@ -77,12 +72,12 @@
     </section>
 
     <!-- PROJECTS -->
-    <section class="section band band--base" id="projects">
+    <section class="section band band--sage" id="projects">
       <div class="wrap">
       <h2 class="title reveal">Projects</h2>
 
       <div class="cards">
-        <article class="card card--lav reveal">
+        <article class="card reveal">
           <span class="card__cat">01 · Data Science / ML</span>
           <h3>Startup Success &amp; Funding Analysis</h3>
           <p>Analysing startup funding and company success.</p>
@@ -90,17 +85,25 @@
           <button class="card__link" data-open="p-startup">View Project →</button>
         </article>
 
-        <article class="card card--mint reveal">
+        <article class="card reveal">
           <span class="card__cat">02 · Unsupervised Learning</span>
-          <h3>Heart Disease Clustering &amp; Anomaly Detection</h3>
-          <p>Finding patient groups and unusual clinical profiles.</p>
-          <p class="card__tech">K-Means · DBSCAN · Isolation Forest · Silhouette · Elbow</p>
-          <button class="card__link" data-open="p-heart">View Project →</button>
+          <h3>Retail Customer Segmentation</h3>
+          <p>Grouping online shoppers and spotting unusual transactions.</p>
+          <p class="card__tech">Clustering · Anomaly Detection · Online Retail Data</p>
+          <button class="card__link" data-open="p-retail">View Project →</button>
         </article>
 
-        <article class="card card--peach card--img reveal">
+        <article class="card reveal">
+          <span class="card__cat">03 · Full-Stack</span>
+          <h3>Patient Vitals Tracker</h3>
+          <p>Tracks and visualises patient vitals, with separate patient and doctor views.</p>
+          <p class="card__tech">Node.js · Express · MongoDB · JWT · JavaScript</p>
+          <button class="card__link" data-open="p-vitals">View Project →</button>
+        </article>
+
+        <article class="card card--img reveal">
           <div>
-            <span class="card__cat">03 · Interactive Web</span>
+            <span class="card__cat">04 · Interactive Web</span>
             <h3>Visit Rajasthan</h3>
             <p>A WebGL travel experience across four destinations, with isometric Blender city tiles.</p>
             <p class="card__tech">WebGL · Three.js · TypeScript · Blender</p>
@@ -112,29 +115,14 @@
           </div>
           <img src="assets/img/tile-jaipur.png" alt="Isometric Blender tile of Jaipur from Visit Rajasthan" width="760" height="461" loading="lazy" />
         </article>
-
-        <article class="card card--sky reveal">
-          <span class="card__cat">04 · Full-Stack</span>
-          <h3>Patient Vitals Tracker</h3>
-          <p>Tracks and visualises patient vitals, with separate patient and doctor views.</p>
-          <p class="card__tech">Node.js · Express · MongoDB · JWT · JavaScript</p>
-          <button class="card__link" data-open="p-vitals">View Project →</button>
-        </article>
       </div>
 
-      <h3 class="subtitle reveal">Other Work</h3>
-      <ul class="list reveal">
-        <li><span>Pixel Dungeon Escape</span><span class="list__meta">Browser game · JavaScript</span><span class="list__links"><a href="https://janci-kundana.github.io/Pixel-Dungeon/" target="_blank" rel="noopener">Play ↗</a><a href="https://github.com/Janci-Kundana/Pixel-Dungeon" target="_blank" rel="noopener">Code ↗</a></span></li>
-        <li><span>Backend Development</span><span class="list__meta">REST APIs · Node.js · Express · MongoDB</span><span class="list__links"><a href="https://github.com/Janci-Kundana/Backend-Development" target="_blank" rel="noopener">Code ↗</a></span></li>
-        <li><span>Zombie Hunter</span><span class="list__meta">10-player CLI card game · OOP</span><span class="list__links"></span></li>
-        <li><span>Attendance App</span><span class="list__meta">Student attendance with admin login · React.js</span><span class="list__links"></span></li>
-        <li><span>Terminal Pac-Man</span><span class="list__meta">ASCII game · Python</span><span class="list__links"><a href="https://github.com/Janci-Kundana/Pacman-Game" target="_blank" rel="noopener">Code ↗</a></span></li>
-      </ul>
+      <p class="more reveal">Smaller experiments and practice code live on <a href="https://github.com/Janci-Kundana" target="_blank" rel="noopener">GitHub ↗</a></p>
       </div>
     </section>
 
     <!-- EDUCATION -->
-    <section class="section band band--mint" id="education">
+    <section class="section band band--plain" id="education">
       <div class="wrap">
       <h2 class="title reveal">Education</h2>
       <div class="edu reveal">
@@ -160,23 +148,23 @@
     </section>
 
     <!-- TOOLS / SKILLS -->
-    <section class="section band band--peach" id="tools">
+    <section class="section band band--ink" id="tools">
       <div class="wrap">
-      <h2 class="title reveal">Tools &amp; Skills</h2>
+      <h2 class="title reveal">Tools &amp; Skills<span>.</span></h2>
       <div class="skills reveal">
-        <div class="skills__col skills__col--lav">
+        <div class="skills__col">
           <h3>Data Science &amp; ML</h3>
           <p>Python · Data Analysis · Machine Learning · Classification · Clustering · Regression · Anomaly Detection</p>
         </div>
-        <div class="skills__col skills__col--mint">
+        <div class="skills__col">
           <h3>Programming</h3>
           <p>Python · JavaScript · HTML · CSS · Tailwind CSS · MySQL</p>
         </div>
-        <div class="skills__col skills__col--peach">
+        <div class="skills__col">
           <h3>Tools</h3>
           <p>Git · GitHub · VS Code · MySQL Workbench</p>
         </div>
-        <div class="skills__col skills__col--sky">
+        <div class="skills__col">
           <h3>Core Concepts</h3>
           <p>OOP · Basic Data Structures · Responsive Design · Problem Solving</p>
         </div>
@@ -187,12 +175,12 @@
     <!-- Achievements & Certifications: add here once there's something verified to show. -->
 
     <!-- RESUME -->
-    <section class="section band band--sky" id="resume">
+    <section class="section band band--plain" id="resume">
       <div class="wrap">
       <div class="resume reveal">
         <h2 class="title">Resume</h2>
         <div class="resume__actions">
-          <a class="btn btn--dark" href="assets/C-Janci-Kundana-Resume.pdf" target="_blank" rel="noopener">View Resume ↗</a>
+          <a class="btn btn--pop" href="assets/C-Janci-Kundana-Resume.pdf" target="_blank" rel="noopener">View Resume ↗</a>
           <a class="btn" href="assets/C-Janci-Kundana-Resume.pdf" download="C-Janci-Kundana-Resume.pdf">Download Resume ↓</a>
         </div>
       </div>
@@ -200,15 +188,15 @@
     </section>
 
     <!-- CONTACT -->
-    <section class="section band band--pink" id="contact">
+    <section class="section band band--sage" id="contact">
       <div class="wrap">
       <div class="contact">
         <div class="reveal">
-          <h2 class="title">Let's connect.</h2>
+          <h2 class="title">Let's connect<span>.</span></h2>
           <ul class="contact__links">
             <li><span>Email</span><a href="mailto:cuddaphajanci@gmail.com">cuddaphajanci@gmail.com</a></li>
-            <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/c-janci-kundana-37313b328/" target="_blank" rel="noopener">c-janci-kundana ↗</a></li>
-            <li><span>GitHub</span><a href="https://github.com/Janci-Kundana" target="_blank" rel="noopener">Janci-Kundana ↗</a></li>
+            <li><span>Profile</span><a href="https://www.linkedin.com/in/c-janci-kundana-37313b328/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+            <li><span>Code</span><a href="https://github.com/Janci-Kundana" target="_blank" rel="noopener">GitHub ↗</a></li>
           </ul>
         </div>
 
@@ -243,21 +231,21 @@
     </dl>
   </dialog>
 
-  <dialog class="modal" id="p-heart" aria-labelledby="p-heart-t">
+  <dialog class="modal" id="p-retail" aria-labelledby="p-retail-t">
     <button class="modal__close" data-close aria-label="Close">×</button>
     <span class="card__cat">02 · Unsupervised Learning / Machine Learning</span>
-    <h3 id="p-heart-t">Heart Disease Clustering &amp; Anomaly Detection</h3>
-    <p>Academic ML project identifying distinct patient groups and unusual clinical profiles.</p>
+    <h3 id="p-retail-t">Retail Customer Segmentation</h3>
+    <p>Customer segmentation and anomaly detection on online retail transaction data.</p>
     <dl class="modal__facts">
-      <dt>Clustering</dt><dd>K-Means, DBSCAN</dd>
-      <dt>Evaluation</dt><dd>Elbow method, silhouette analysis</dd>
-      <dt>Anomalies</dt><dd>Isolation Forest</dd>
+      <dt>Data</dt><dd>Online retail transactions</dd>
+      <dt>Segmentation</dt><dd>Clustering customers into groups by how they shop</dd>
+      <dt>Anomalies</dt><dd>Flagging transactions that don't fit normal patterns</dd>
     </dl>
   </dialog>
 
   <dialog class="modal" id="p-rajasthan" aria-labelledby="p-rajasthan-t">
     <button class="modal__close" data-close aria-label="Close">×</button>
-    <span class="card__cat">03 · Interactive Web Project</span>
+    <span class="card__cat">04 · Interactive Web Project</span>
     <h3 id="p-rajasthan-t">Visit Rajasthan</h3>
     <div class="modal__tiles">
       <img src="assets/img/tile-jaipur.png" alt="Jaipur tile" width="760" height="461" loading="lazy" />
@@ -278,7 +266,7 @@
 
   <dialog class="modal" id="p-vitals" aria-labelledby="p-vitals-t">
     <button class="modal__close" data-close aria-label="Close">×</button>
-    <span class="card__cat">04 · Full-Stack Development</span>
+    <span class="card__cat">03 · Full-Stack Development</span>
     <h3 id="p-vitals-t">Patient Vitals Tracker</h3>
     <p>A full-stack app to track and visualise patient vital information through a web interface.</p>
     <dl class="modal__facts">
